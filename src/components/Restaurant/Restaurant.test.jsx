@@ -1,6 +1,6 @@
 import Restaurant from "./Restaurant.jsx";
 import { describe, it, expect } from "vitest";
-import { getByDisplayValue, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 
 describe("Restaurant", () => {
   it("renders an Orders heading", () => {
