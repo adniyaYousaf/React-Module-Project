@@ -7,7 +7,7 @@ import CustomerProfile from "../CustomerProfile/CustomerProfile";
 const SearchResults = (props) => {
   const [customerID, setCustomerID] = useState(null);
 
-  function showProfile(customerId) {
+  function selectedId(customerId) {
     setCustomerID(customerId);
   }
 
@@ -55,7 +55,7 @@ const SearchResults = (props) => {
                 checkInDate={checkInDate}
                 checkOutDate={checkOutDate}
                 nights={dayjs(checkOutDate).diff(checkInDate, "day")}
-                customerID={showProfile}
+                customerID={selectedID}
               />
             )
           )}

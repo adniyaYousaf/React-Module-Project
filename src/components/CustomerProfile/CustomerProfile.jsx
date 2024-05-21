@@ -2,6 +2,7 @@ import "./CustomerProfile.scss";
 import { useEffect, useState } from "react";
 
 const CustomerProfile = (selectedID) => {
+
   const [profileData, setProfileData] = useState([]);
 
   useEffect(() => {
@@ -16,7 +17,6 @@ const CustomerProfile = (selectedID) => {
     };
     fetchData();
   }, []);
-
   return (
     <div className="customerProfile">
       <ul>

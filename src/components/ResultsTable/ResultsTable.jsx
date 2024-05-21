@@ -4,10 +4,11 @@ import "./ResultTables.scss";
 const ResultsTable = (props) => {
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
   const id = props.id;
-  
+
   const handleRowClick = (index) => {
     setSelectedRowIndex(index === selectedRowIndex ? null : index);
   };
+
   return (
     <>
       <tr
@@ -28,7 +29,7 @@ const ResultsTable = (props) => {
           <button
             onClick={(e) => {
               e.preventDefault();
-              props.customerID(id);
+              
             }}
           >
             Show Profile

@@ -12,7 +12,7 @@ const Bookings = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://phrygian-cheddar-antler.glitch.me/"
+          "https://cyf-hotel-api.netlify.app/"
         );
         if (response.ok) {
           const jsonData = await response.json();
