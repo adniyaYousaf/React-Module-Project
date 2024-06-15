@@ -1,14 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
-import ResultsTable from "@/components/ResultsTable/ResultsTable.jsx";
 import CustomerProfile from "@/components/CustomerProfile/CustomerProfile.jsx";
 import "./SearchResults.scss";
 
 const SearchResults = (props) => {
   const [nightData, setNightData] = useState([]);
-
-  ///////////////////////////
   const [columnForSort, setColumnForSort] = useState(null);
   const [sortOrder, setSortOrder] = useState(null); //this hook state sorts asc or desc and by default order not been set
 
@@ -51,23 +48,17 @@ const SearchResults = (props) => {
 
   // handler , when click on each column it should sort the column ascending or descending
   const handleColumnClick = (column) => {
-    // if we click on a same column it toggle between asc and desc
     if (columnForSort === column) {
-      // sortOrder State check which type of sorting is being done on the column if it's asc makes it desc and vice versa
       setSortOrder(sortOrder === "asc" ? "desc" : "asc");
     } else {
-      // other wise if a different column is clicked `columnForSort` state select corresponding column
-      // and then sort it `asc` for the first time
       setColumnForSort(column);
       setSortOrder("asc");
     }
   };
 
-  // Update sorted results when results or sorting state changes
+ 
   const sortedResults = sortResults(props.results);
 
-  ////////////////////////////////////////////////
-  // `calculationNights` function passed to `useEffect` to get updated correctly
   useEffect(() => {
     if (props.results) {
       const nightsArray = props.results.map(({ checkInDate, checkOutDate }) =>
@@ -76,8 +67,8 @@ const SearchResults = (props) => {
       setNightData(nightsArray);
     }
   }, [props.results]);
-  /////////////////////////////////////
-  const [selectedCustomerId, setSelectedCustomerId] = useState(null);
+
+  const [selectedCustomerId, setSelectedCustomerId] = useState(0);
 
   const showProfile = (customerId) => {
     setSelectedCustomerId(customerId);
