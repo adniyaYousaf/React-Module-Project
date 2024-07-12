@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Search from "@/components/Search/Search";
 import SearchResults from "@/components/SearchResults/SearchResults.jsx";
 import "./Bookings.scss";
+import Logo from "@/assets/spa-logo.png";
 
 const Bookings = () => {
   const [totalBooking, setTotalBooking] = useState([]);
@@ -202,7 +203,7 @@ const Bookings = () => {
                     Confirm booking
                   </button>
                 </form>
-                <img class="form_img" src="/assets/spa-logo.png"></img>
+                <img class="form_img" src={Logo}></img>
               </div>
             </div>
 
