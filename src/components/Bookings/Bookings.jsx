@@ -202,7 +202,7 @@ const Bookings = () => {
                     Confirm booking
                   </button>
                 </form>
-                <img class="form_img" src="/src/assets/spa-logo.png"></img>
+                <img class="form_img" src="assets/spa-logo.png"></img>
               </div>
             </div>
 
