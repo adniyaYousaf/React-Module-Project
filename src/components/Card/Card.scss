@@ -1,16 +1,19 @@
 .card {
-  display: grid;
-  grid-template:
-    "image image image" 1fr
-    ". title ." auto / var(--space--gap) 1fr var(--space--gap);
   border: var(--border);
   border-color: var(--color--accent);
+  transition: transform 1s ease-in-out;
+  transform: scale(1);
 
   &__title {
-    grid-area: title;
+    margin: 0;
+    text-align: center;
+    height: 10%;
+    background-color: rgb(37, 5, 67);
   }
   &__image {
-    grid-area: image;
-    mix-blend-mode: overlay;
+    height: 90%;
   }
+}
+.card:hover {
+  transform: scale(1.05);
 }

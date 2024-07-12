@@ -7,18 +7,14 @@ import "./SearchResults.scss";
 const SearchResults = (props) => {
   const [nightData, setNightData] = useState([]);
   const [columnForSort, setColumnForSort] = useState(null);
-  const [sortOrder, setSortOrder] = useState(null); //this hook state sorts asc or desc and by default order not been set
+  const [sortOrder, setSortOrder] = useState(null);
+  const [selected, setSelected] = useState(0);
 
-  //////////////////////////////////
-  // Define calculateNights function at the component level
-  // `calculationNights` function defined outside of `useEffect` hook state to avoid scope decleration errors
   const calculateNights = (checkInDate, checkOutDate) => {
     const checkInDayjs = dayjs(checkInDate);
     const checkOutDayjs = dayjs(checkOutDate);
     return checkOutDayjs.diff(checkInDayjs, "day");
   };
-
-  // Sorting function based on the selected column and sort order
 
   const sortResults = (results) => {
     if (!sortOrder) {
@@ -56,7 +52,6 @@ const SearchResults = (props) => {
     }
   };
 
- 
   const sortedResults = sortResults(props.results);
 
   useEffect(() => {
@@ -78,12 +73,14 @@ const SearchResults = (props) => {
     return <table>No results found</table>;
   }
 
+  const handleSelectedRow = (id) => {
+    setSelected(id);
+  };
   return (
     <div>
       <table role="table">
         <thead>
           <tr>
-            {/* `handleColumnClick`  passed to each column onlick*/}
             <th onClick={() => handleColumnClick("id")}>ID</th>
             <th onClick={() => handleColumnClick("title")}>Title</th>
             <th onClick={() => handleColumnClick("firstName")}>First Name</th>
@@ -124,7 +121,11 @@ const SearchResults = (props) => {
               checkInDate,
               checkOutDate,
             }) => (
-              <tr key={id}>
+              <tr
+                key={id}
+                onClick={() => handleSelectedRow(id)}
+                className={selected == id ? "active" : ""}
+              >
                 <td>{id}</td>
                 <td>{title}</td>
                 <td>{firstName}</td>
@@ -135,7 +136,7 @@ const SearchResults = (props) => {
                 <td>{checkOutDate}</td>
                 {/* Add column for nights */}
                 <td>{calculateNights(checkInDate, checkOutDate)}</td>
-                {/* Add button for customer profile */}
+
                 <td>
                   <button onClick={() => showProfile(id)}>Show Profile</button>
                 </td>

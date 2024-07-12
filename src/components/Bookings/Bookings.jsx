@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import Search from "@/components/Search/Search";
 import SearchResults from "@/components/SearchResults/SearchResults.jsx";
 import "./Bookings.scss";
 
 const Bookings = () => {
+  const [totalBooking, setTotalBooking] = useState([]);
   const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [newBooking, setNewBooking] = useState({
     firstName: "",
     surname: "",
@@ -34,41 +36,42 @@ const Bookings = () => {
   };
 
   useEffect(() => {
-  
     const fetchData = async () => {
       try {
         const response = await fetch("https://cyf-hotel-api.netlify.app/");
         const data = await response.json();
+        setLoading(true);
+        setTotalBooking(data);
         setBookings(data);
-       
       } catch (error) {
         console.error("Error fetching bookings data:", error);
       }
     };
-     fetchData();
-  }, []);
-
+    fetchData();
+  }, [loading]);
 
   const search = (searchVal) => {
     setBookings(
-     bookings.filter((item) =>
+      totalBooking.filter((item) =>
         item.firstName.toLowerCase().includes(searchVal)
       )
     );
   };
-
+  function handleRefresh() {
+    setBookings(totalBooking);
+  }
   const bookingSubmit = (e) => {
     e.preventDefault();
-    // Check if the room ID is already booked
+
     const isRoomAlreadyBooked = bookings.some(
       (booking) => booking.roomId === newBooking.roomId
     );
 
     if (isRoomAlreadyBooked) {
       alert("This room is already booked. Please choose another room.");
-      return; // Prevent further execution if the room is already booked
+      return;
     }
-    
+
     const requiredFields = [
       "firstName",
       "surname",
@@ -81,16 +84,13 @@ const Bookings = () => {
       alert("Please fill in all required fields.");
       return;
     }
-    // Generate a unique id for the new booking
+
     const newId = Math.max(...bookings.map((booking) => booking.id), 0) + 1;
 
-    // Create the new booking with the generated id
     const newBookingWithId = { ...newBooking, id: newId };
 
-    // Update the bookings state with the new booking
     setBookings([...bookings, newBookingWithId]);
 
-    // Clear the form and close the modal
     setNewBooking({
       firstName: "",
       surname: "",
@@ -106,7 +106,7 @@ const Bookings = () => {
   return (
     <>
       <main className="bookings">
-        <Search search={search} />
+        <Search search={search} loading={handleRefresh} />
         <section className="content">
           <SearchResults results={bookings} />
         </section>
@@ -116,7 +116,6 @@ const Bookings = () => {
 
         {isModalOpen && (
           <div className="modal-overlay">
-            <h3 className="add_customer">Add new Customer</h3>
             <div className="modal-content">
               <div className="container">
                 <form onSubmit={bookingSubmit} className="form_column">
@@ -195,7 +194,11 @@ const Bookings = () => {
                       onChange={(e) => handleInputChange(e, "checkOutDate")}
                     />
                   </label>
-                  <button data-testid="newBooking" className="submit_button" type="submit">
+                  <button
+                    data-testid="newBooking"
+                    className="submit_button"
+                    type="submit"
+                  >
                     Confirm booking
                   </button>
                 </form>
@@ -214,7 +217,3 @@ const Bookings = () => {
 };
 
 export default Bookings;
-
-
-
-

@@ -1,0 +1,13 @@
+.profile-card{
+background-color: rgb(40, 9, 42);
+display: flex;
+justify-content: space-around;
+align-items: center;
+margin-top: 1rem;
+}
+.vip{
+    color: red;
+}
+.not-vip{
+    display: none;
+}

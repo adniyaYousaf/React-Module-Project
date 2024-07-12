@@ -3,8 +3,7 @@ import AppHeader from "@/components/AppHeader/AppHeader.jsx";
 import Footer from "@/components/Footer/Footer.jsx";
 import Deck from "../Deck/Deck";
 import Restaurant from "../Restaurant/Restaurant.jsx";
-import "./App.scss"
-
+import "./App.scss";
 
 const arr = [
   "123 Fake Street, London, E1 4UD",
@@ -13,13 +12,15 @@ const arr = [
 ];
 
 const App = () => (
-  <div className="app">
-    <AppHeader />
-    <Deck />
-    <Bookings />
-    <Restaurant />
+  <>
+    <div className="app">
+      <AppHeader />
+      <Deck />
+      <Bookings />
+      <Restaurant />
+    </div>
     <Footer array={arr} />
-  </div>
+  </>
 );
 
 export default App;
