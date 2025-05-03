@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -11,28 +12,31 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: install dependencies
+      - name: Install dependencies
         run: npm install
 
-      - name: build website
+      - name: Build website
         run: npm run build
 
-      - name: Install AWS CLI
-        run: sudo apt-get install -y awscli
+      - name: Install AWS CLI (correct method)
+        run: |
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install
+          aws --version
 
-      - name: set AWS credentials
+      - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
-
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-2
 
-      - name: what folder am I in?
-        run: pwd
+      - name: Debug - List files (optional)
+        run: |
+          pwd
+          ls -la
+          ls -la ./dist  # Check if the build folder exists
 
-      - name: what folders exist here?
-        run: ls -la
-
-      - name: copy to S3
-        run: aws s3 sync ./dist/. s3://cyf-hotel-react-app
+      - name: Deploy to S3
+        run: aws s3 sync ./dist/ s3://cyf-hotel-react-app --delete
