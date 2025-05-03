@@ -35,4 +35,4 @@ jobs:
         run: ls -la
 
       - name: copy to S3
-        run: aws s3 sync ./dist/. s3://hotal-cyf
+        run: aws s3 sync ./dist/. s3://hotel-cyf
